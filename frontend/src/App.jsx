@@ -1,0 +1,98 @@
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import BlogPage from './pages/BlogPage';
+import ReviewsPage from './pages/ReviewsPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import CookiePolicy from './pages/CookiePolicy';
+import Disclaimer from './pages/Disclaimer';
+import './App.css';
+
+// Footer link components (can be expanded later)
+const Sitemap = () => (
+    <div className="container" style={{ padding: '4rem 0', minHeight: '60vh' }}>
+        <h1>Sitemap</h1>
+        <p>This page is under construction. Check back soon!</p>
+    </div>
+);
+
+const Accessibility = () => (
+    <div className="container" style={{ padding: '4rem 0', minHeight: '60vh' }}>
+        <h1>Accessibility</h1>
+        <p>This page is under construction. Check back soon!</p>
+    </div>
+);
+
+const Cookies = () => (
+    <div className="container" style={{ padding: '4rem 0', minHeight: '60vh' }}>
+        <h1>Cookie Settings</h1>
+        <p>This page is under construction. Check back soon!</p>
+    </div>
+);
+
+const Support = () => (
+    <div className="container" style={{ padding: '4rem 0', minHeight: '60vh' }}>
+        <h1>Support</h1>
+        <p>For support, please email us at <a href="mailto:noiseremover.com@gmail.com">noiseremover.com@gmail.com</a></p>
+    </div>
+);
+
+// 404 Not Found Page
+const NotFound = () => (
+    <div className="container" style={{ 
+        padding: '6rem 0', 
+        minHeight: '60vh', 
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }}>
+        <h1 style={{ fontSize: '4rem', marginBottom: '1rem' }}>404</h1>
+        <h2 style={{ marginBottom: '2rem' }}>Page Not Found</h2>
+        <p style={{ marginBottom: '2rem', color: 'var(--gray)' }}>
+            The page you're looking for doesn't exist or has been moved.
+        </p>
+        <a href="/" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+            <i className="fas fa-home"></i> Go to Homepage
+        </a>
+    </div>
+);
+
+function App() {
+    return (
+        <Router>
+            <div className="App">
+                <Routes>
+                    {/* Main Routes */}
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/blog" element={<BlogPage />} />
+                    <Route path="/reviews" element={<ReviewsPage />} />
+                    
+                    {/* Legal Pages - NOW WITH REAL CONTENT */}
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-of-service" element={<TermsOfService />} />
+                    <Route path="/cookie-policy" element={<CookiePolicy />} />
+                    <Route path="/disclaimer" element={<Disclaimer />} />
+                    
+                    {/* Footer Links */}
+                    <Route path="/sitemap" element={<Sitemap />} />
+                    <Route path="/accessibility" element={<Accessibility />} />
+                    <Route path="/cookies" element={<Cookies />} />
+                    <Route path="/contact" element={<Support />} />
+                    
+                    {/* Redirects */}
+                    <Route path="/home" element={<Navigate to="/" replace />} />
+                    <Route path="/index.html" element={<Navigate to="/" replace />} />
+                    
+                    {/* 404 Route - Must be last */}
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </div>
+        </Router>
+    );
+}
+
+export default App;
