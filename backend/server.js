@@ -6,19 +6,18 @@ dotenv.config();
 // Now import everything else
 const app = require('./src/app');
 const logger = require('./src/utils/logger');
-const rnnoiseService = require('./src/services/rnnoiseService'); // Changed from elevenLabsService
+const elevenLabsService = require('./src/services/elevenLabsService');
 
 const PORT = process.env.PORT || 5000;
 
 // Start cleanup scheduler (clean files older than 1 hour)
-// If your RNNoise service has this method, uncomment:
-// rnnoiseService.scheduleCleanup(3600000);
+elevenLabsService.scheduleCleanup(3600000);
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
     logger.info(`🚀 Server running on port ${PORT}`);
     logger.info(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
     logger.info(`📝 Health check: http://localhost:${PORT}/api/audio/health`);
-    logger.info(`🎵 RNNoise Audio Processor ready (Python backend)`);
+    logger.info(`🎵 ElevenLabs Audio Isolation API ready`);
 });
 
 // Graceful shutdown

@@ -9,16 +9,20 @@ const app = express();
 
 // Rate limiting
 const limiter = rateLimit({
-    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW) * 60 * 1000 || 15 * 60 * 1000, // 15 minutes
-    max: parseInt(process.env.RATE_LIMIT_MAX) || 100, // Limit each IP to 100 requests per windowMs
+    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW) * 60 * 1000 || 15 * 60 * 1000,
+    max: parseInt(process.env.RATE_LIMIT_MAX) || 100,
     message: 'Too many requests from this IP, please try again later.',
     standardHeaders: true,
     legacyHeaders: false,
 });
 
-// Middleware
+// CORS configuration - Updated for production
 app.use(cors({
-    origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:3000'],
+    origin: [
+        'http://localhost:3000',
+        'https://noise-remover-frontend.onrender.com',
+        process.env.ALLOWED_ORIGINS
+    ].filter(Boolean),
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key']
@@ -49,7 +53,6 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
     logger.error('Unhandled error:', err);
     
-    // Handle specific errors
     if (err.message.includes('File too large')) {
         return res.status(413).json({ error: err.message });
     }
@@ -58,7 +61,6 @@ app.use((err, req, res, next) => {
         return res.status(415).json({ error: err.message });
     }
     
-    // Default error response
     res.status(500).json({ 
         error: 'Internal server error',
         message: process.env.NODE_ENV === 'development' ? err.message : undefined
