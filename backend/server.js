@@ -98,7 +98,7 @@ app.post('/api/audio/process-audio', upload.single('audio'), async (req, res) =>
         const params = versionParams[version] || versionParams['SE v1.0'];
 
         // Call Python script
-        const pythonScript = path.join(__dirname, 'src', 'python_scripts', 'deepfilter_enhance.py');
+        const pythonScript = path.join(__dirname, 'src', 'python_scripts', 'deepfilter_audio_processor.py');
         const command = `python "${pythonScript}" "${inputFile}" "${outputFile}" ${params.strength} ${params.postfilter} ${params.passes}`;
 
         await execPromise(command);
