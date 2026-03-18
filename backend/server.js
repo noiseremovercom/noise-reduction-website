@@ -24,7 +24,21 @@ app.use(cors({
     ].filter(Boolean),
     credentials: true
 }));
+
 app.use(express.json());
+
+// 👇 ADDED: Root route for Render health checks
+app.get('/', (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        message: 'Noise Reduction API is running',
+        endpoints: {
+            health: '/api/audio/health',
+            versions: '/api/audio/versions',
+            process: '/api/audio/process-audio'
+        }
+    });
+});
 
 // Ensure temp directory exists
 const tempDir = path.join(__dirname, 'temp');
