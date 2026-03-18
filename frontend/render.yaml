@@ -1,18 +1,18 @@
 services:
   - type: web
-    name: noise-remover-frontend
-    runtime: static
+    name: noise-remover-backend
+    runtime: node
     repo: https://github.com/noiseremovercom/noise-reduction-website.git
     branch: main
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./build
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
+    region: singapore
     envVars:
-      - key: REACT_APP_API_URL
-        value: https://noise-remover-backend.onrender.com/api
-      - key: REACT_APP_MAX_FILE_SIZE
+      - key: NODE_ENV
+        value: production
+      - key: MAX_FILE_SIZE
         value: 10485760
+      - key: ALLOWED_ORIGINS
+        value: https://noise-remover-frontend.onrender.com
