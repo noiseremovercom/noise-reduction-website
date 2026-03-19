@@ -8,3 +8,4 @@ deepfilternet
 speechbrain
 huggingface_hub
 flask-cors
+librosa==0.10.1
