@@ -8,6 +8,11 @@ from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
+# Add these imports for chunked processing
+import soundfile as sf
+import librosa
+import time
+
 class DeepFilterAudioProcessor:
     def __init__(self, device=None):
         """
@@ -65,9 +70,10 @@ class DeepFilterAudioProcessor:
         audio_clean = torch.istft(spec_clean, n_fft=512, hop_length=128)
         return audio_clean.unsqueeze(0)
     
-    def process_file(self, input_path, output_path, strength=1.0, postfilter=False, passes=1, volume_boost=1.0):
+    def process_file_chunked(self, input_path, output_path, strength=1.0, postfilter=False, passes=1, volume_boost=1.0, chunk_duration=30):
         """
-        Process a single audio file with version-specific parameters
+        Process a single audio file in chunks to save memory
+        Perfect for Render's 512MB RAM limit
         
         Args:
             input_path: path to input audio file
@@ -76,12 +82,101 @@ class DeepFilterAudioProcessor:
             postfilter: whether to apply post-filter
             passes: number of enhancement passes
             volume_boost: final volume adjustment
+            chunk_duration: process in chunks of N seconds (default: 30)
         """
         if not self.initialized:
             self.initialize()
             
         try:
-            print(f"[INFO] Processing: {os.path.basename(input_path)}")
+            print(f"[INFO] Processing (CHUNKED MODE): {os.path.basename(input_path)}")
+            print(f"[INFO] Version settings: strength={strength}, postfilter={postfilter}, passes={passes}, boost={volume_boost}")
+            print(f"[INFO] Processing in {chunk_duration}-second chunks to save memory")
+            
+            # Check if input file exists
+            if not os.path.exists(input_path):
+                print(f"[ERROR] Input file not found: {input_path}")
+                return False
+            
+            # Get audio info without loading entire file
+            info = sf.info(input_path)
+            total_duration = info.duration
+            original_sr = int(info.samplerate)
+            
+            print(f"[INFO] Total duration: {total_duration:.2f}s, Sample rate: {original_sr}Hz")
+            
+            # Prepare output file (open once, write chunks as we go)
+            output_file = sf.SoundFile(output_path, mode='w', samplerate=self.sample_rate, channels=1)
+            
+            # Process chunk by chunk
+            chunks_processed = 0
+            for start_time in range(0, int(total_duration), chunk_duration):
+                end_time = min(start_time + chunk_duration, total_duration)
+                print(f"[INFO] Processing chunk {start_time}s to {end_time:.2f}s...")
+                
+                # Load only this chunk using librosa (memory efficient)
+                y, sr = librosa.load(
+                    input_path,
+                    sr=self.sample_rate,
+                    mono=True,
+                    offset=start_time,
+                    duration=chunk_duration
+                )
+                
+                # Convert to tensor
+                waveform = torch.from_numpy(y).float().unsqueeze(0)
+                
+                # Apply enhancement to this chunk
+                enhanced = waveform
+                for i in range(passes):
+                    enhanced = self.enhance_func(self.model, self.df_state, enhanced)
+                
+                # Apply post-filter if requested
+                if postfilter:
+                    enhanced = self.apply_post_filter(enhanced, strength=strength)
+                
+                # Apply volume boost
+                if volume_boost != 1.0:
+                    enhanced = enhanced * volume_boost
+                
+                # Write chunk to output file
+                output_file.write(enhanced.squeeze().numpy())
+                chunks_processed += 1
+                
+                # Force garbage collection to free memory
+                del y, waveform, enhanced
+                if chunks_processed % 2 == 0:
+                    import gc
+                    gc.collect()
+            
+            output_file.close()
+            
+            # Verify output
+            if os.path.exists(output_path):
+                file_size = os.path.getsize(output_path)
+                print(f"[SUCCESS] Processing complete! Processed {chunks_processed} chunks")
+                print(f"[SUCCESS] Output: {os.path.basename(output_path)}")
+                print(f"[SUCCESS] Size: {file_size/1024:.1f}KB")
+                return True
+            else:
+                print("[ERROR] Output file not created")
+                return False
+                
+        except Exception as e:
+            print(f"[ERROR] Processing failed: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+    
+    def process_file(self, input_path, output_path, strength=1.0, postfilter=False, passes=1, volume_boost=1.0):
+        """
+        Original method - processes entire file at once
+        Kept for backward compatibility
+        """
+        if not self.initialized:
+            self.initialize()
+            
+        try:
+            print(f"[INFO] Processing (STANDARD MODE): {os.path.basename(input_path)}")
             print(f"[INFO] Version settings: strength={strength}, postfilter={postfilter}, passes={passes}, boost={volume_boost}")
             
             # Check if input file exists
@@ -93,6 +188,11 @@ class DeepFilterAudioProcessor:
             waveform, sr = torchaudio.load(input_path)
             original_duration = waveform.shape[1] / sr
             print(f"[INFO] Loaded: {sr}Hz, shape={waveform.shape}")
+            
+            # Check file size - warn if large
+            file_size_mb = os.path.getsize(input_path) / (1024 * 1024)
+            if file_size_mb > 5:
+                print(f"[WARNING] File size is {file_size_mb:.1f}MB. Consider using chunked mode for better memory usage.")
             
             # Convert to mono if stereo
             if waveform.shape[0] > 1:
@@ -154,15 +254,37 @@ class DeepFilterAudioProcessor:
             traceback.print_exc()
             return False
 
+    def cleanup_old_files(self, temp_dir, max_age_minutes=20):
+        """Delete files older than specified minutes"""
+        print(f"[CLEANUP] Checking for files older than {max_age_minutes} minutes in {temp_dir}")
+        now = time.time()
+        deleted_count = 0
+        
+        if not os.path.exists(temp_dir):
+            print(f"[CLEANUP] Directory {temp_dir} does not exist")
+            return 0
+            
+        for filename in os.listdir(temp_dir):
+            filepath = os.path.join(temp_dir, filename)
+            if os.path.isfile(filepath):
+                file_age_minutes = (now - os.path.getmtime(filepath)) / 60
+                if file_age_minutes > max_age_minutes:
+                    os.remove(filepath)
+                    deleted_count += 1
+                    print(f"[CLEANUP] Deleted old file: {filename} (age: {file_age_minutes:.1f} minutes)")
+        
+        print(f"[CLEANUP] Deleted {deleted_count} old files")
+        return deleted_count
+
 # Command-line interface
 if __name__ == "__main__":
     import sys
     
     if len(sys.argv) < 3:
-        print("\n" + "="*60)
-        print("DEEPFILTERNET AUDIO PROCESSOR - VERSION SUPPORT")
-        print("="*60)
-        print("Usage: python deepfilter_audio_processor.py <input_file> <output_file> [strength] [postfilter] [passes] [volume_boost]")
+        print("\n" + "="*70)
+        print("DEEPFILTERNET AUDIO PROCESSOR - VERSION SUPPORT + CHUNKED PROCESSING")
+        print("="*70)
+        print("Usage: python deepfilter_audio_processor.py <input_file> <output_file> [strength] [postfilter] [passes] [volume_boost] [chunked]")
         print("\nParameters:")
         print("  input_file    : Path to input audio file")
         print("  output_file   : Path for output audio file")
@@ -170,12 +292,13 @@ if __name__ == "__main__":
         print("  postfilter    : true/false (default: false)")
         print("  passes        : number of enhancement passes (default: 1)")
         print("  volume_boost  : 0.8-1.5 (default: 1.0)")
+        print("  chunked       : true/false - use chunked mode for large files (default: true for >5MB)")
         print("\nVersion Presets:")
         print("  SE v1.0    : strength=1.5, postfilter=true, passes=2, boost=1.2")
         print("  NR v4.0    : strength=1.2, postfilter=true, passes=1, boost=1.1")
         print("  NR v2.4    : strength=1.0, postfilter=false, passes=1, boost=1.0")
         print("  NR v2.1.1  : strength=0.8, postfilter=false, passes=1, boost=0.95")
-        print("="*60 + "\n")
+        print("="*70 + "\n")
         sys.exit(1)
     
     input_file = sys.argv[1]
@@ -187,6 +310,18 @@ if __name__ == "__main__":
     passes = int(sys.argv[5]) if len(sys.argv) > 5 else 1
     volume_boost = float(sys.argv[6]) if len(sys.argv) > 6 else 1.0
     
+    # Check if chunked mode is specified
+    use_chunked = True  # Default to chunked for better memory
+    if len(sys.argv) > 7:
+        use_chunked = sys.argv[7].lower() == 'true'
+    
+    # Auto-detect: use chunked for files > 5MB
+    if len(sys.argv) <= 7 and os.path.exists(input_file):
+        file_size_mb = os.path.getsize(input_file) / (1024 * 1024)
+        use_chunked = file_size_mb > 5
+        if use_chunked:
+            print(f"[INFO] File size {file_size_mb:.1f}MB > 5MB, auto-enabling chunked mode")
+    
     if not os.path.exists(input_file):
         print(f"\nERROR: Input file not found: {input_file}")
         sys.exit(1)
@@ -196,7 +331,15 @@ if __name__ == "__main__":
     
     # Initialize and run processor
     processor = DeepFilterAudioProcessor()
-    success = processor.process_file(input_file, output_file, strength, postfilter, passes, volume_boost)
+    
+    if use_chunked:
+        success = processor.process_file_chunked(input_file, output_file, strength, postfilter, passes, volume_boost)
+    else:
+        success = processor.process_file(input_file, output_file, strength, postfilter, passes, volume_boost)
+    
+    # Optional cleanup of old files (commented out by default)
+    # temp_dir = os.path.dirname(input_file)
+    # processor.cleanup_old_files(temp_dir, max_age_minutes=20)
     
     if success:
         print(f"\nSUCCESS! Output saved to: {output_file}")

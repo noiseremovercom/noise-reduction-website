@@ -7,3 +7,4 @@ webrtcvad
 deepfilternet
 speechbrain
 huggingface_hub
+flask-cors
