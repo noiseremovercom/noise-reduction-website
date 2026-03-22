@@ -1,12 +1,13 @@
 /* src/components/VersionSelector.css */
+/* ===== DARK THEME - MATCHES FLUTTER APP ===== */
 
 .version-selector-container {
     margin-bottom: 2rem;
-    background: white;
+    background: var(--bg-card, #1A1A1A);
     border-radius: 20px;
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(124, 58, 237, 0.2);
     position: relative;
     z-index: 1;
 }
@@ -20,7 +21,7 @@
 
 .version-selector-header label {
     font-weight: 600;
-    color: #2d3748;
+    color: var(--text-primary, #FFFFFF);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -28,13 +29,13 @@
 }
 
 .version-selector-header label i {
-    color: #667eea;
+    color: #7C3AED;
 }
 
 .info-toggle-btn {
     background: none;
     border: none;
-    color: #718096;
+    color: #9CA3AF;
     font-size: 1.2rem;
     cursor: pointer;
     padding: 0.5rem;
@@ -48,8 +49,8 @@
 }
 
 .info-toggle-btn:hover {
-    background: #edf2f7;
-    color: #667eea;
+    background: rgba(124, 58, 237, 0.1);
+    color: #A855F7;
     transform: scale(1.1);
 }
 
@@ -66,13 +67,14 @@
     flex: 1;
     min-width: 200px;
     padding: 0.75rem 2rem 0.75rem 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid rgba(124, 58, 237, 0.3);
     border-radius: 12px;
     font-size: 1rem;
-    background: white;
+    background: #1F1F1F;
+    color: #FFFFFF;
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237C3AED' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
     transition: all 0.3s ease;
@@ -85,18 +87,18 @@
 }
 
 .version-select:hover:not(:disabled) {
-    border-color: #667eea;
-    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.1);
+    border-color: #7C3AED;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
 }
 
 .version-select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    border-color: #A855F7;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
 }
 
 .version-select:disabled {
-    background-color: #f7fafc;
+    background-color: #2D2D2D;
     cursor: not-allowed;
     opacity: 0.7;
 }
@@ -108,7 +110,7 @@
     padding: 0.5rem 1.5rem;
     border-radius: 50px;
     border-left: 4px solid;
-    background: #f7fafc;
+    background: #2D2D2D;
     animation: slideIn 0.3s ease;
 }
 
@@ -129,11 +131,11 @@
 
 .version-name {
     font-weight: 600;
-    color: #2d3748;
+    color: #FFFFFF;
 }
 
 .version-badge {
-    background: #667eea;
+    background: #7C3AED;
     color: white;
     padding: 0.2rem 0.8rem;
     border-radius: 50px;
@@ -145,9 +147,9 @@
 .version-info-panel {
     margin-top: 2rem;
     padding: 1.5rem;
-    background: #f8fafd;
+    background: #1F1F1F;
     border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(124, 58, 237, 0.2);
     animation: fadeIn 0.3s ease;
 }
 
@@ -164,7 +166,7 @@
 
 .version-info-panel h4 {
     margin-bottom: 1.5rem;
-    color: #2d3748;
+    color: #FFFFFF;
     font-size: 1.1rem;
 }
 
@@ -175,23 +177,26 @@
 }
 
 .version-card {
-    background: white;
+    background: #1A1A1A;
     padding: 1.2rem;
     border-radius: 12px;
     border-top: 3px solid;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: all 0.3s ease;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-top-width: 3px;
 }
 
 .version-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2);
+    border-color: rgba(124, 58, 237, 0.4);
 }
 
 .version-card.selected {
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
-    border: 2px solid #667eea;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(168, 85, 247, 0.05));
+    border: 2px solid #7C3AED;
 }
 
 .version-card-header {
@@ -208,11 +213,11 @@
 
 .version-card-title {
     font-weight: 600;
-    color: #2d3748;
+    color: #FFFFFF;
 }
 
 .version-card-badge {
-    background: #667eea;
+    background: #7C3AED;
     color: white;
     padding: 0.2rem 0.6rem;
     border-radius: 50px;
@@ -222,21 +227,21 @@
 }
 
 .version-card-description {
-    color: #4a5568;
+    color: #E5E5E5;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
     line-height: 1.4;
 }
 
 .version-card-long {
-    color: #718096;
+    color: #9CA3AF;
     font-size: 0.85rem;
     margin-bottom: 0.75rem;
     line-height: 1.4;
 }
 
 .version-strength {
-    color: #a0aec0;
+    color: #6B7280;
     font-size: 0.8rem;
 }
 
@@ -246,16 +251,19 @@
     gap: 1rem;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid rgba(124, 58, 237, 0.2);
 }
 
 .stat-item {
     text-align: center;
+    background: #2D2D2D;
+    padding: 0.75rem;
+    border-radius: 12px;
 }
 
 .stat-label {
     display: block;
-    color: #718096;
+    color: #9CA3AF;
     font-size: 0.85rem;
     margin-bottom: 0.25rem;
 }
@@ -264,13 +272,27 @@
     display: block;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #2d3748;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-/* Responsive */
+/* ===== PRESET SPECIFIC COLORS ===== */
+.version-card[data-preset="SE v1.0"] {
+    border-top-color: #F59E0B;
+}
+.version-card[data-preset="NR v4.0"] {
+    border-top-color: #10B981;
+}
+.version-card[data-preset="NR v2.4"] {
+    border-top-color: #3B82F6;
+}
+.version-card[data-preset="NR v2.1.1"] {
+    border-top-color: #EC489A;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .version-selector-wrapper {
         flex-direction: column;
@@ -288,5 +310,9 @@
     .version-stats {
         grid-template-columns: 1fr;
         gap: 0.75rem;
+    }
+    
+    .stat-item {
+        padding: 0.5rem;
     }
 }
