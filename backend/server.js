@@ -17,11 +17,9 @@ const execPromise = util.promisify(exec);
 
 // Middleware
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://noise-remover-frontend.onrender.com',
-        process.env.ALLOWED_ORIGINS
-    ].filter(Boolean),
+    origin: '*',  // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
     credentials: true
 }));
 
