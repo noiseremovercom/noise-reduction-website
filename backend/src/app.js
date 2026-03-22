@@ -16,12 +16,11 @@ const limiter = rateLimit({
     legacyHeaders: false,
 });
 
-// ========== UPDATED CORS CONFIGURATION ==========
+// ========== CORS CONFIGURATION - FIXED FOR FLUTTER APP ==========
 const allowedOrigins = [
-    // Production origins
+    // Production frontend
     'https://noise-remover-frontend.onrender.com',
     'https://noise-reduction-website-1.onrender.com',
-    'https://noise-reduction-website.onrender.com',
     
     // Local development
     'http://localhost:3000',
@@ -29,11 +28,11 @@ const allowedOrigins = [
     'http://127.0.0.1:3000',
     'http://127.0.0.1:5000',
     
-    // Flutter web development (runs on various ports)
+    // Flutter web (runs on various ports)
     /^http:\/\/localhost:[0-9]+$/,
     /^http:\/\/127\.0\.0\.1:[0-9]+$/,
     
-    // For testing with file:// protocol (opening HTML directly)
+    // For file:// protocol (opening HTML directly)
     'null'
 ];
 
