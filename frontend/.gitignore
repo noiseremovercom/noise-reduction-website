@@ -1,18 +1,29 @@
-# Create .gitignore file
-@"
-# Dependencies
+# Dependencies - ONE ENTRY IS ENOUGH!
 node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Package managers
 .pnp
 .pnp.js
+
+# Environment files
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.egg-info/
+*.egg
+.venv/
+venv/
+env/
 
 # Build outputs
 build/
@@ -35,11 +46,3 @@ backend/pretrained_models/
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Python
-*.egg-info/
-*.egg
-.venv/
-venv/
-env/
-"@ | Out-File -FilePath .gitignore -Encoding UTF8
