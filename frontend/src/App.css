@@ -3201,3 +3201,520 @@ div.modal-content {
         font-size: 0.9rem !important;
     }
 }
+/* ===== ADDITIONAL MOBILE RESPONSIVE FIXES ===== */
+
+/* Fix for mobile devices - Comprehensive responsive fixes */
+@media (max-width: 768px) {
+    /* Tool Container Fixes */
+    .tool-container {
+        padding: 1.5rem !important;
+        margin: 1rem 0 !important;
+        border-radius: 24px !important;
+    }
+    
+    .tool-container h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .tool-container h2 i {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Upload Area Fixes */
+    .upload-area {
+        padding: 1.5rem 1rem !important;
+        border-radius: 20px !important;
+    }
+    
+    .upload-icon-wrapper {
+        width: 70px !important;
+        height: 70px !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .upload-icon {
+        font-size: 2rem !important;
+    }
+    
+    .upload-text {
+        font-size: 1.2rem !important;
+    }
+    
+    .upload-subtext {
+        font-size: 0.9rem !important;
+        flex-wrap: wrap !important;
+        gap: 0.3rem !important;
+    }
+    
+    .supported-formats {
+        font-size: 0.75rem !important;
+        padding: 0.5rem 1rem !important;
+        flex-wrap: wrap !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+    
+    /* File Info Fixes */
+    .file-info {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 1rem !important;
+        gap: 0.8rem !important;
+    }
+    
+    .file-icon {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 2rem !important;
+    }
+    
+    .file-details h4 {
+        font-size: 0.9rem !important;
+        word-break: break-all !important;
+    }
+    
+    .file-meta {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+    }
+    
+    .file-size,
+    .file-type {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.6rem !important;
+    }
+    
+    .remove-file {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+    }
+    
+    /* Process Button Fixes */
+    .process-button {
+        padding: 1rem !important;
+        font-size: 1rem !important;
+        gap: 0.5rem !important;
+    }
+    
+    .button-icon {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Progress Container Fixes */
+    .progress-container {
+        padding: 1rem !important;
+        border-radius: 30px !important;
+    }
+    
+    .progress-text {
+        font-size: 0.8rem !important;
+    }
+    
+    /* Result Container Fixes */
+    .result-container {
+        padding: 1.2rem !important;
+    }
+    
+    .result-container h3 {
+        font-size: 1.1rem !important;
+        flex-wrap: wrap !important;
+        gap: 0.3rem !important;
+    }
+    
+    .result-container audio {
+        margin: 1rem 0 !important;
+    }
+    
+    /* Comparison Buttons */
+    .comparison-buttons {
+        margin: 0.5rem 0 !important;
+    }
+    
+    .compare-btn {
+        padding: 0.7rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Result Buttons */
+    .result-buttons {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        margin-top: 1rem !important;
+    }
+    
+    .download-button,
+    .reset-button {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.7rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Hero Section Fixes */
+    .hero-section {
+        padding: 2rem 0 !important;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    /* Demo Players Fixes */
+    .demo-players {
+        padding: 1rem !important;
+    }
+    
+    .demo-players h3 {
+        font-size: 1.2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .demo-players h3 i {
+        font-size: 1.3rem !important;
+    }
+    
+    .demo-item {
+        padding: 1rem !important;
+    }
+    
+    .demo-item p {
+        font-size: 0.9rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .player-wrapper {
+        padding: 0.3rem !important;
+    }
+    
+    .player-wrapper audio {
+        height: 35px !important;
+    }
+    
+    .demo-label {
+        font-size: 0.65rem !important;
+        padding: 0.2rem 0.6rem !important;
+        top: -8px !important;
+        right: 8px !important;
+    }
+    
+    /* How It Works Section */
+    .how-it-works-section {
+        padding: 3rem 0 !important;
+    }
+    
+    .step-card {
+        padding: 1.5rem !important;
+    }
+    
+    .step-icon {
+        font-size: 2rem !important;
+        margin: 1rem 0 !important;
+    }
+    
+    .step-card h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    .step-card p {
+        font-size: 0.85rem !important;
+    }
+    
+    /* Features Section */
+    .features-section {
+        padding: 3rem 0 !important;
+    }
+    
+    .feature-card {
+        padding: 1.5rem !important;
+    }
+    
+    .feature-icon {
+        font-size: 2rem !important;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    .feature-card p {
+        font-size: 0.85rem !important;
+    }
+    
+    /* Section Titles */
+    .section-title {
+        font-size: 1.8rem !important;
+    }
+    
+    .section-subtitle {
+        font-size: 0.9rem !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    /* Container padding */
+    .container {
+        padding: 0 16px !important;
+    }
+}
+
+/* Extra small devices (phones, 480px and down) */
+@media (max-width: 480px) {
+    /* Tool Container */
+    .tool-container {
+        padding: 1rem !important;
+    }
+    
+    .tool-container h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Upload Area */
+    .upload-area {
+        padding: 1rem 0.8rem !important;
+    }
+    
+    .upload-icon-wrapper {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .upload-icon {
+        font-size: 1.8rem !important;
+    }
+    
+    .upload-text {
+        font-size: 1rem !important;
+    }
+    
+    .upload-subtext {
+        font-size: 0.8rem !important;
+    }
+    
+    .supported-formats {
+        font-size: 0.7rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+    
+    /* File Info */
+    .file-info {
+        padding: 0.8rem !important;
+    }
+    
+    .file-icon {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1.5rem !important;
+    }
+    
+    .file-details h4 {
+        font-size: 0.8rem !important;
+    }
+    
+    .file-meta {
+        font-size: 0.65rem !important;
+    }
+    
+    .file-size,
+    .file-type {
+        font-size: 0.65rem !important;
+        padding: 0.15rem 0.5rem !important;
+    }
+    
+    /* Process Button */
+    .process-button {
+        padding: 0.8rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .button-icon {
+        font-size: 1rem !important;
+    }
+    
+    /* Result Container */
+    .result-container {
+        padding: 1rem !important;
+    }
+    
+    .result-container h3 {
+        font-size: 1rem !important;
+    }
+    
+    .result-container audio {
+        height: 40px !important;
+    }
+    
+    .download-button,
+    .reset-button {
+        padding: 0.6rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Demo Players */
+    .demo-item {
+        padding: 0.8rem !important;
+    }
+    
+    .demo-item p {
+        font-size: 0.85rem !important;
+    }
+    
+    .player-wrapper audio {
+        height: 32px !important;
+    }
+    
+    /* Step Cards */
+    .step-card {
+        padding: 1rem !important;
+    }
+    
+    .step-number {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.9rem !important;
+        top: -12px !important;
+    }
+    
+    .step-icon {
+        font-size: 1.8rem !important;
+    }
+    
+    .step-card h3 {
+        font-size: 1rem !important;
+    }
+    
+    /* Feature Cards */
+    .feature-card {
+        padding: 1rem !important;
+    }
+    
+    .feature-icon {
+        font-size: 1.8rem !important;
+    }
+    
+    .feature-card h3 {
+        font-size: 1rem !important;
+    }
+    
+    /* Section Titles */
+    .section-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .hero-title {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Fix for landscape mode on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .tool-container {
+        padding: 1rem !important;
+    }
+    
+    .upload-area {
+        padding: 1rem !important;
+    }
+    
+    .upload-icon-wrapper {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .upload-icon {
+        font-size: 1.5rem !important;
+    }
+    
+    .upload-text {
+        font-size: 1rem !important;
+    }
+    
+    .file-info {
+        flex-direction: row !important;
+        padding: 0.8rem !important;
+    }
+    
+    .file-icon {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .process-button {
+        padding: 0.8rem !important;
+    }
+    
+    .result-buttons {
+        flex-direction: row !important;
+    }
+}
+
+/* Fix for very small devices (320px and below) */
+@media (max-width: 320px) {
+    .tool-container h2 {
+        font-size: 1.2rem !important;
+    }
+    
+    .upload-text {
+        font-size: 0.9rem !important;
+    }
+    
+    .upload-subtext {
+        font-size: 0.7rem !important;
+    }
+    
+    .supported-formats {
+        font-size: 0.65rem !important;
+    }
+    
+    .file-details h4 {
+        font-size: 0.75rem !important;
+    }
+    
+    .file-meta {
+        font-size: 0.6rem !important;
+    }
+    
+    .process-button {
+        font-size: 0.85rem !important;
+        padding: 0.7rem !important;
+    }
+    
+    .download-button,
+    .reset-button {
+        font-size: 0.8rem !important;
+        padding: 0.5rem !important;
+    }
+}
+
+/* Ensure text doesn't overflow */
+.file-details h4 {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 768px) {
+    button,
+    .btn,
+    .process-button,
+    .download-button,
+    .reset-button,
+    .compare-btn,
+    .upload-area,
+    .remove-file {
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+    
+    button:active,
+    .btn:active,
+    .process-button:active {
+        transform: scale(0.98) !important;
+    }
+}
