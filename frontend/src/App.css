@@ -2905,3 +2905,299 @@ div.modal-content {
         font-size: 0.7rem;
     }
 }
+/* ===== MODAL STYLES - FOR REVIEW MODAL ===== */
+
+.modal {
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    z-index: 9999 !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.modal.show {
+    display: flex !important;
+}
+
+.modal .modal-content {
+    background: var(--dark-card) !important;
+    padding: 2rem !important;
+    border-radius: 24px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(124, 58, 237, 0.2) !important;
+    animation: modalSlideUp 0.3s ease !important;
+}
+
+.modal .modal-content h2 {
+    text-align: center !important;
+    margin-bottom: 1.5rem !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    background: var(--gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+}
+
+.modal .close-modal {
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1.25rem !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    color: var(--text-tertiary) !important;
+    transition: all 0.3s ease !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.modal .close-modal:hover {
+    color: var(--danger) !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+    transform: rotate(90deg) !important;
+}
+
+/* Form Groups */
+.modal .form-group {
+    margin-bottom: 1.5rem !important;
+}
+
+.modal label {
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    font-weight: 600 !important;
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem !important;
+}
+
+.modal .required {
+    color: var(--danger) !important;
+    margin-left: 0.2rem !important;
+}
+
+.modal input,
+.modal textarea {
+    width: 100% !important;
+    padding: 0.85rem 1rem !important;
+    border: 2px solid var(--dark-elevated) !important;
+    border-radius: 12px !important;
+    font-family: inherit !important;
+    font-size: 0.95rem !important;
+    background: var(--dark-surface) !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+    outline: none !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2) !important;
+}
+
+.modal input.error,
+.modal textarea.error {
+    border-color: var(--danger) !important;
+}
+
+/* Star Rating */
+.modal .star-rating-container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    flex-wrap: wrap !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0.5rem 0 !important;
+}
+
+.modal .star-rating {
+    display: flex !important;
+    gap: 0.6rem !important;
+    font-size: 2rem !important;
+    cursor: pointer !important;
+}
+
+.modal .star-rating i {
+    color: var(--text-tertiary) !important;
+    transition: all 0.2s ease !important;
+}
+
+.modal .star-rating i:hover {
+    transform: scale(1.15) !important;
+    color: #fbbf24 !important;
+}
+
+.modal .star-rating i.fas,
+.modal .star-rating i.active {
+    color: #fbbf24 !important;
+}
+
+.modal .rating-text {
+    color: var(--text-tertiary) !important;
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.75rem !important;
+    background: var(--dark-surface) !important;
+    border-radius: 50px !important;
+}
+
+.modal .rating-hint {
+    display: block !important;
+    color: var(--text-tertiary) !important;
+    font-size: 0.7rem !important;
+    margin-top: 0.25rem !important;
+}
+
+/* Character Counter */
+.modal .char-counter {
+    text-align: right !important;
+    font-size: 0.7rem !important;
+    color: var(--text-tertiary) !important;
+    margin-top: 0.3rem !important;
+}
+
+.modal .char-counter.warning {
+    color: var(--warning) !important;
+}
+
+.modal .char-counter.danger {
+    color: var(--danger) !important;
+}
+
+/* Error Message */
+.modal .error-message {
+    display: block !important;
+    color: var(--danger) !important;
+    font-size: 0.7rem !important;
+    margin-top: 0.25rem !important;
+}
+
+/* Submit Button */
+.modal .submit-review-btn {
+    width: 100% !important;
+    padding: 0.9rem !important;
+    background: var(--gradient) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.6rem !important;
+    transition: all 0.3s ease !important;
+    margin-top: 0.5rem !important;
+}
+
+.modal .submit-review-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-glow) !important;
+}
+
+/* Modal Footer */
+.modal .modal-footer {
+    margin-top: 1.5rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    text-align: center !important;
+}
+
+.modal .modal-footer p {
+    color: var(--text-tertiary) !important;
+    font-size: 0.85rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+}
+
+.modal .modal-footer i {
+    font-size: 1rem !important;
+    animation: modalBounce 1s ease infinite !important;
+}
+
+/* Animations */
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes modalBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+    .modal .modal-content {
+        padding: 1.5rem !important;
+        width: 95% !important;
+    }
+    
+    .modal .modal-content h2 {
+        font-size: 1.4rem !important;
+    }
+    
+    .modal .star-rating {
+        font-size: 1.6rem !important;
+        gap: 0.5rem !important;
+    }
+    
+    .modal .star-rating-container {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal .modal-content {
+        padding: 1.25rem !important;
+    }
+    
+    .modal .modal-content h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    .modal .star-rating {
+        font-size: 1.4rem !important;
+        gap: 0.4rem !important;
+    }
+    
+    .modal .submit-review-btn {
+        padding: 0.7rem !important;
+        font-size: 0.9rem !important;
+    }
+}
