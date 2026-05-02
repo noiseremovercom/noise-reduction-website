@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-const MAX_FILE_SIZE = 10485760; // 10MB in bytes
+const MAX_FILE_SIZE = 1073741824; // 10MB in bytes
 
 const FileUploader = ({ onFileUpload, isProcessing }) => {
     const [file, setFile] = useState(null);
@@ -74,7 +74,7 @@ const FileUploader = ({ onFileUpload, isProcessing }) => {
                     Supports: MP3, WAV, M4A, FLAC, AAC, OGG, WEBM, MP4, MOV
                 </div>
                 <p style={{ marginTop: '1rem', color: '#666', fontSize: '0.9rem' }}>
-                    Max file size: 10 MB
+                    Max file size: 1 GB
                 </p>
             </div>
             

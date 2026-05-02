@@ -25,7 +25,7 @@ app.use(cors({
 
 app.use(express.json());
 
-// 👇 ADDED: Root route for Render health checks
+//  ADDED: Root route for Render health checks
 app.get('/', (req, res) => {
     res.json({ 
         status: 'ok', 
@@ -46,7 +46,7 @@ fs.ensureDirSync(tempDir);
 const storage = multer.memoryStorage();
 const upload = multer({ 
     storage,
-    limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE) || 52428800 }
+    limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE) || 1073741824 }
 });
 
 // Health check endpoint
@@ -97,7 +97,7 @@ app.post('/api/audio/process-audio', upload.single('audio'), async (req, res) =>
 
         // Call Python script
         const pythonScript = path.join(__dirname, 'src', 'python_scripts', 'deepfilter_audio_processor.py');
-        const command = `python "${pythonScript}" "${inputFile}" "${outputFile}" ${params.strength} ${params.postfilter} ${params.passes}`;
+        const command = `./venv/bin/python "${pythonScript}" "${inputFile}" "${outputFile}" ${params.strength} ${params.postfilter} ${params.passes}`;
 
         await execPromise(command);
 
