@@ -85,9 +85,20 @@ app.post('/api/audio/process-audio', upload.single('audio'), async (req, res) =>
         // Save uploaded file
         await fs.writeFile(inputFile, req.file.buffer);
 
-                // Accept WAV files directly (no conversion needed for now)
-        // The file is already in the correct format for DeepFilterNet
-        console.log(`✅ File received: ${inputFile}`);
+        // Convert any audio/video format to WAV for processing
+        const { execSync } = require("child_process");
+        const wavFile = inputFile.replace(/\.[^/.]+$/, ".wav");
+
+        try {
+            execSync(`ffmpeg -i "${inputFile}" -ar 16000 -ac 1 "${wavFile}" -y 2>/dev/null`);
+            const tempInput = inputFile;
+            inputFile = wavFile;
+            await fs.remove(tempInput);
+            console.log(`✅ Converted to WAV: ${wavFile}`);
+        } catch (err) {
+            await fs.remove(inputFile);
+            return res.status(400).json({ error: "Unsupported audio format. Please use MP3, WAV, M4A, etc." });
+        }
 
         // Version parameters
         const versionParams = {

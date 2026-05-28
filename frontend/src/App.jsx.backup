@@ -1,14 +1,31 @@
+// src/App.jsx
 import React from 'react';
+import Sitemap from "./pages/Sitemap";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Sitemap from "./pages/Sitemap";
 import HomePage from './pages/HomePage';
+import Sitemap from "./pages/Sitemap";
 import BlogPage from './pages/BlogPage';
+import Sitemap from "./pages/Sitemap";
 import ReviewsPage from './pages/ReviewsPage';
+import Sitemap from "./pages/Sitemap";
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Sitemap from "./pages/Sitemap";
 import TermsOfService from './pages/TermsOfService';
+import Sitemap from "./pages/Sitemap";
 import CookiePolicy from './pages/CookiePolicy';
+import Sitemap from "./pages/Sitemap";
 import Disclaimer from './pages/Disclaimer';
-import Sitemap from './pages/Sitemap';
+import Sitemap from "./pages/Sitemap";
 import './App.css';
+
+// Footer link components (can be expanded later)
+const Sitemap = () => (
+    <div className="container" style={{ padding: '4rem 0', minHeight: '60vh' }}>
+        <h1>Sitemap</h1>
+        <p>This page is under construction. Check back soon!</p>
+    </div>
+);
 
 const Accessibility = () => (
     <div className="container" style={{ padding: '4rem 0', minHeight: '60vh' }}>
@@ -31,10 +48,11 @@ const Support = () => (
     </div>
 );
 
+// 404 Not Found Page
 const NotFound = () => (
-    <div className="container" style={{
-        padding: '6rem 0',
-        minHeight: '60vh',
+    <div className="container" style={{ 
+        padding: '6rem 0', 
+        minHeight: '60vh', 
         textAlign: 'center',
         display: 'flex',
         flexDirection: 'column',
@@ -47,7 +65,7 @@ const NotFound = () => (
             The page you're looking for doesn't exist or has been moved.
         </p>
         <a href="/" className="btn btn-primary" style={{ textDecoration: 'none' }}>
-            Go to Homepage
+            <i className="fas fa-home"></i> Go to Homepage
         </a>
     </div>
 );
@@ -57,19 +75,28 @@ function App() {
         <Router>
             <div className="App">
                 <Routes>
+                    {/* Main Routes */}
                     <Route path="/" element={<HomePage />} />
                     <Route path="/blog" element={<BlogPage />} />
                     <Route path="/reviews" element={<ReviewsPage />} />
+                    
+                    {/* Legal Pages - NOW WITH REAL CONTENT */}
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="/terms-of-service" element={<TermsOfService />} />
                     <Route path="/cookie-policy" element={<CookiePolicy />} />
                     <Route path="/disclaimer" element={<Disclaimer />} />
+                    
+                    {/* Footer Links */}
                     <Route path="/sitemap" element={<Sitemap />} />
                     <Route path="/accessibility" element={<Accessibility />} />
                     <Route path="/cookies" element={<Cookies />} />
                     <Route path="/contact" element={<Support />} />
+                    
+                    {/* Redirects */}
                     <Route path="/home" element={<Navigate to="/" replace />} />
                     <Route path="/index.html" element={<Navigate to="/" replace />} />
+                    
+                    {/* 404 Route - Must be last */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>

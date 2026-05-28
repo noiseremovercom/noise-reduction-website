@@ -7,6 +7,7 @@ import numpy as np
 from pathlib import Path
 import warnings
 import soundfile as sf
+import librosa
 import time
 
 warnings.filterwarnings('ignore')
@@ -28,6 +29,9 @@ class DeepFilterAudioProcessor:
             self.enhance_func = enhance
             self.initialized = True
             print("[SUCCESS] DeepFilterNet loaded successfully")
+        except ImportError:
+            print("[ERROR] deepfilternet not installed")
+            raise
         except Exception as e:
             print(f"[ERROR] Failed to load DeepFilterNet: {e}")
             raise
@@ -39,7 +43,7 @@ class DeepFilterAudioProcessor:
         try:
             print(f"[INFO] Processing: {os.path.basename(input_path)}")
             
-            # Load audio using soundfile
+            # Load audio using soundfile (more reliable than torchaudio)
             audio_array, sr = sf.read(input_path)
             print(f"[INFO] Loaded: {sr}Hz, shape={audio_array.shape}")
             
@@ -48,12 +52,12 @@ class DeepFilterAudioProcessor:
                 print(f"[INFO] Converting stereo to mono")
                 audio_array = np.mean(audio_array, axis=1)
             
-            # Ensure shape is (samples,)
-            if len(audio_array.shape) > 1:
-                audio_array = audio_array.flatten()
+            # Convert to tensor
+            waveform = torch.from_numpy(audio_array).float().unsqueeze(0)
             
-            # Convert to tensor and add channel dimension
-            waveform = torch.from_numpy(audio_array).float()
+            # Add channel dimension if needed
+            if waveform.dim() == 2:
+                waveform = waveform.unsqueeze(0)
             
             # Resample if needed
             if sr != self.sample_rate:
@@ -61,15 +65,7 @@ class DeepFilterAudioProcessor:
                 resampler = torchaudio.transforms.Resample(sr, self.sample_rate)
                 waveform = resampler(waveform)
             
-            # Ensure proper shape: (channels, samples) - should be (1, samples)
-            if waveform.dim() == 1:
-                waveform = waveform.unsqueeze(0)
-            elif waveform.dim() == 3:
-                waveform = waveform.squeeze(0)
-            
-            print(f"[INFO] Waveform shape: {waveform.shape}")
-            
-            # Apply DeepFilterNet enhancement
+            # Apply DeepFilterNet
             enhanced = waveform
             for i in range(passes):
                 print(f"[INFO] Pass {i+1}/{passes}")
@@ -93,7 +89,7 @@ class DeepFilterAudioProcessor:
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python processor.py <input> <output> [strength] [postfilter] [passes] [volume_boost]")
+        print("Usage: python processor.py <input> <output> [strength] [postfilter] [passes]")
         sys.exit(1)
     
     input_file = sys.argv[1]
